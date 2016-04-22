@@ -2,7 +2,7 @@ FROM mediadepot/base
 # Install apk packages
 RUN apk --no-cache --update upgrade \
 	&& apk add \
-	cmake gcc openssl-dev unzip wget
+	build-base openssl-dev unzip wget
 #Create hadouken folder structure & set as volumes
 RUN mkdir -p /srv/hadouken/app && \
 	mkdir -p /srv/hadouken/data && \
