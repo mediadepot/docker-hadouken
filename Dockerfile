@@ -2,7 +2,7 @@ FROM mediadepot/base
 # Install apk packages
 RUN apk --no-cache --update upgrade \
 	&& apk add \
-	build-base openssl-dev unzip wget
+	boost-dev libtorrent-dev cmake build-base openssl-dev bash zip unzip wget
 #Create hadouken folder structure & set as volumes
 RUN mkdir -p /srv/hadouken/app && \
 	mkdir -p /srv/hadouken/data && \
@@ -10,11 +10,12 @@ RUN mkdir -p /srv/hadouken/app && \
 
 #Install Hadouken
 RUN git clone https://github.com/hadouken/hadouken.git /srv/hadouken/app && \
-	cd /srv/hadouken/app && \
-	git submodule update --init && \
-	./linux/install-boost.sh && \
-	./linux/install-libtorrent.sh && \
+	cd /srv/hadouken/app && git checkout tags/v5.1.0 \
+	git submodule update --init	&& \
 	./linux/build.sh
+
+#	./linux/install-boost.sh && \
+#	./linux/install-libtorrent.sh && \
 
 #Copy over start script and docker-gen files
 ADD ./start.sh /srv/start.sh
